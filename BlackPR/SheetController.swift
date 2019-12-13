@@ -35,7 +35,7 @@ class SheetController: NSViewController, WKNavigationDelegate {
         newLoginView.navigationDelegate = LoginView.navigationDelegate
         view.replaceSubview(LoginView, with: newLoginView)
         LoginView = newLoginView
-        self.LoginView.loadHTMLString(text, baseURL: nil)
+        LoginView.loadHTMLString(text, baseURL: nil)
     }
 
     override func viewDidLoad() {
