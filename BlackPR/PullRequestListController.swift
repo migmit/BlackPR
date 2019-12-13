@@ -262,8 +262,8 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
             return waitingPRs[index]
         } else if index == waitingPRs.count {
             return nil
-        } else if index < waitingPRs.count + dormantPRs.count {
-            return dormantPRs[index - waitingPRs.count]
+        } else if index <= waitingPRs.count + dormantPRs.count {
+            return dormantPRs[index - waitingPRs.count - 1]
         } else {
             return nil
         }
