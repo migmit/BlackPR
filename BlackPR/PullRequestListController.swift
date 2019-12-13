@@ -39,15 +39,17 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
             if (pr.waiting && (oldPR.map{!$0.waiting} ?? true)) {
                 self.notifyUser(pr: pr)
             }
-            if let old = oldPR {
-                if (pr.waiting && !old.waiting) {
-                    self.makePRWaiting(pr: pr)
+            if (pr.requested == self.user) {
+                if let old = oldPR {
+                    if (pr.waiting && !old.waiting) {
+                        self.makePRWaiting(pr: pr)
+                    }
+                    if (!pr.waiting && old.waiting) {
+                        self.makePRDormant(pr: pr)
+                    }
+                } else {
+                    self.insertPR(pr: pr)
                 }
-                if (!pr.waiting && old.waiting) {
-                    self.makePRDormant(pr: pr)
-                }
-            } else {
-                self.insertPR(pr: pr)
             }
             return
         }
