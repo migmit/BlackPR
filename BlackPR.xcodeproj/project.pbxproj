@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B50FA5F023A38430009AA5E1 /* IndicatorLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FA5EF23A38430009AA5E1 /* IndicatorLight.swift */; };
+		B50FA5F823A3BA76009AA5E1 /* ShowDormantCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FA5F723A3BA76009AA5E1 /* ShowDormantCellView.swift */; };
+		B545A7AF2387EAF0009E2B24 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545A7AE2387EAF0009E2B24 /* Fetcher.swift */; };
+		B5A095B32384086700BE271B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A095B22384086700BE271B /* AppDelegate.swift */; };
+		B5A095B82384086700BE271B /* BlackPR.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5A095B62384086700BE271B /* BlackPR.xcdatamodeld */; };
+		B5A095BA2384086800BE271B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A095B92384086800BE271B /* Assets.xcassets */; };
+		B5A095BD2384086800BE271B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5A095BB2384086800BE271B /* Main.storyboard */; };
+		B5A095C6238421DD00BE271B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A095C5238421DD00BE271B /* MainViewController.swift */; };
+		B5C02A6823842E8C003A1766 /* UserListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A6723842E8C003A1766 /* UserListController.swift */; };
+		B5C02A7623844254003A1766 /* UsersSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7523844254003A1766 /* UsersSection.swift */; };
+		B5C02A782384A73A003A1766 /* SheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A772384A73A003A1766 /* SheetController.swift */; };
+		B5C02A7A23855AC6003A1766 /* AuthCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7923855AC6003A1766 /* AuthCode.swift */; };
+		B5C02A7C23859512003A1766 /* PullRequestListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7B23859512003A1766 /* PullRequestListController.swift */; };
+		B5C02A7E2385E2BC003A1766 /* UserDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7D2385E2BC003A1766 /* UserDrag.swift */; };
+		B5C02A8023871234003A1766 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7F23871234003A1766 /* MainWindowController.swift */; };
+		B5DDFA4623A130F8009BF5E5 /* EphemeralUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DDFA4523A130F8009BF5E5 /* EphemeralUser.swift */; };
+		B5DDFA4C23A2E2DD009BF5E5 /* PRCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DDFA4B23A2E2DD009BF5E5 /* PRCellView.swift */; };
+		B5DDFA4E23A2E9EE009BF5E5 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DDFA4D23A2E9EE009BF5E5 /* NSAttributedString.swift */; };
+		B5EE25ED238B22E000E84768 /* EphemeralPR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25EC238B22E000E84768 /* EphemeralPR.swift */; };
+		B5EE25EF238B233400E84768 /* EphemeralPending.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25EE238B233400E84768 /* EphemeralPending.swift */; };
+		B5EE25F1238B249B00E84768 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25F0238B249B00E84768 /* Updater.swift */; };
+		B5EE25F3238B253200E84768 /* FetchStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25F2238B253200E84768 /* FetchStatus.swift */; };
+		B5EE25F5238B27AB00E84768 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25F4238B27AB00E84768 /* Scheduler.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B50FA5EF23A38430009AA5E1 /* IndicatorLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorLight.swift; sourceTree = "<group>"; };
+		B50FA5F723A3BA76009AA5E1 /* ShowDormantCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDormantCellView.swift; sourceTree = "<group>"; };
+		B545A7AE2387EAF0009E2B24 /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
+		B5A095AF2384086700BE271B /* BlackPR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackPR.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5A095B22384086700BE271B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B5A095B72384086700BE271B /* BlackPR.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlackPR.xcdatamodel; sourceTree = "<group>"; };
+		B5A095B92384086800BE271B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5A095BC2384086800BE271B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B5A095BE2384086800BE271B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5A095BF2384086800BE271B /* BlackPR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlackPR.entitlements; sourceTree = "<group>"; };
+		B5A095C5238421DD00BE271B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		B5C02A6723842E8C003A1766 /* UserListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListController.swift; sourceTree = "<group>"; };
+		B5C02A7523844254003A1766 /* UsersSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSection.swift; sourceTree = "<group>"; };
+		B5C02A772384A73A003A1766 /* SheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetController.swift; sourceTree = "<group>"; };
+		B5C02A7923855AC6003A1766 /* AuthCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCode.swift; sourceTree = "<group>"; };
+		B5C02A7B23859512003A1766 /* PullRequestListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestListController.swift; sourceTree = "<group>"; };
+		B5C02A7D2385E2BC003A1766 /* UserDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDrag.swift; sourceTree = "<group>"; };
+		B5C02A7F23871234003A1766 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		B5DDFA4523A130F8009BF5E5 /* EphemeralUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralUser.swift; sourceTree = "<group>"; };
+		B5DDFA4B23A2E2DD009BF5E5 /* PRCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRCellView.swift; sourceTree = "<group>"; };
+		B5DDFA4D23A2E9EE009BF5E5 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
+		B5EE25EC238B22E000E84768 /* EphemeralPR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralPR.swift; sourceTree = "<group>"; };
+		B5EE25EE238B233400E84768 /* EphemeralPending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralPending.swift; sourceTree = "<group>"; };
+		B5EE25F0238B249B00E84768 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		B5EE25F2238B253200E84768 /* FetchStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStatus.swift; sourceTree = "<group>"; };
+		B5EE25F4238B27AB00E84768 /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B5A095AC2384086700BE271B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B5A095A62384086700BE271B = {
+			isa = PBXGroup;
+			children = (
+				B5A095B12384086700BE271B /* BlackPR */,
+				B5A095B02384086700BE271B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B5A095B02384086700BE271B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5A095AF2384086700BE271B /* BlackPR.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B5A095B12384086700BE271B /* BlackPR */ = {
+			isa = PBXGroup;
+			children = (
+				B5A095B22384086700BE271B /* AppDelegate.swift */,
+				B5DDFA4D23A2E9EE009BF5E5 /* NSAttributedString.swift */,
+				B5A095B92384086800BE271B /* Assets.xcassets */,
+				B5A095BB2384086800BE271B /* Main.storyboard */,
+				B5DDFA4B23A2E2DD009BF5E5 /* PRCellView.swift */,
+				B50FA5F723A3BA76009AA5E1 /* ShowDormantCellView.swift */,
+				B50FA5EF23A38430009AA5E1 /* IndicatorLight.swift */,
+				B5C02A7F23871234003A1766 /* MainWindowController.swift */,
+				B5C02A7923855AC6003A1766 /* AuthCode.swift */,
+				B5C02A772384A73A003A1766 /* SheetController.swift */,
+				B5C02A6723842E8C003A1766 /* UserListController.swift */,
+				B5C02A7D2385E2BC003A1766 /* UserDrag.swift */,
+				B5C02A7523844254003A1766 /* UsersSection.swift */,
+				B5C02A7B23859512003A1766 /* PullRequestListController.swift */,
+				B545A7AE2387EAF0009E2B24 /* Fetcher.swift */,
+				B5EE25F2238B253200E84768 /* FetchStatus.swift */,
+				B5EE25F0238B249B00E84768 /* Updater.swift */,
+				B5DDFA4523A130F8009BF5E5 /* EphemeralUser.swift */,
+				B5EE25EE238B233400E84768 /* EphemeralPending.swift */,
+				B5EE25EC238B22E000E84768 /* EphemeralPR.swift */,
+				B5EE25F4238B27AB00E84768 /* Scheduler.swift */,
+				B5A095C5238421DD00BE271B /* MainViewController.swift */,
+				B5A095BE2384086800BE271B /* Info.plist */,
+				B5A095BF2384086800BE271B /* BlackPR.entitlements */,
+				B5A095B62384086700BE271B /* BlackPR.xcdatamodeld */,
+			);
+			path = BlackPR;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B5A095AE2384086700BE271B /* BlackPR */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5A095C22384086800BE271B /* Build configuration list for PBXNativeTarget "BlackPR" */;
+			buildPhases = (
+				B5A095AB2384086700BE271B /* Sources */,
+				B5A095AC2384086700BE271B /* Frameworks */,
+				B5A095AD2384086700BE271B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BlackPR;
+			productName = BlackPR;
+			productReference = B5A095AF2384086700BE271B /* BlackPR.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B5A095A72384086700BE271B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = migmit;
+				TargetAttributes = {
+					B5A095AE2384086700BE271B = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+				};
+			};
+			buildConfigurationList = B5A095AA2384086700BE271B /* Build configuration list for PBXProject "BlackPR" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B5A095A62384086700BE271B;
+			productRefGroup = B5A095B02384086700BE271B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B5A095AE2384086700BE271B /* BlackPR */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B5A095AD2384086700BE271B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5A095BA2384086800BE271B /* Assets.xcassets in Resources */,
+				B5A095BD2384086800BE271B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B5A095AB2384086700BE271B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5C02A7C23859512003A1766 /* PullRequestListController.swift in Sources */,
+				B5C02A7E2385E2BC003A1766 /* UserDrag.swift in Sources */,
+				B5A095C6238421DD00BE271B /* MainViewController.swift in Sources */,
+				B5EE25F1238B249B00E84768 /* Updater.swift in Sources */,
+				B5EE25EF238B233400E84768 /* EphemeralPending.swift in Sources */,
+				B5A095B82384086700BE271B /* BlackPR.xcdatamodeld in Sources */,
+				B5C02A8023871234003A1766 /* MainWindowController.swift in Sources */,
+				B5DDFA4623A130F8009BF5E5 /* EphemeralUser.swift in Sources */,
+				B5C02A7623844254003A1766 /* UsersSection.swift in Sources */,
+				B545A7AF2387EAF0009E2B24 /* Fetcher.swift in Sources */,
+				B5EE25F5238B27AB00E84768 /* Scheduler.swift in Sources */,
+				B5C02A6823842E8C003A1766 /* UserListController.swift in Sources */,
+				B5A095B32384086700BE271B /* AppDelegate.swift in Sources */,
+				B5EE25ED238B22E000E84768 /* EphemeralPR.swift in Sources */,
+				B5DDFA4C23A2E2DD009BF5E5 /* PRCellView.swift in Sources */,
+				B5C02A782384A73A003A1766 /* SheetController.swift in Sources */,
+				B50FA5F023A38430009AA5E1 /* IndicatorLight.swift in Sources */,
+				B5C02A7A23855AC6003A1766 /* AuthCode.swift in Sources */,
+				B5DDFA4E23A2E9EE009BF5E5 /* NSAttributedString.swift in Sources */,
+				B5EE25F3238B253200E84768 /* FetchStatus.swift in Sources */,
+				B50FA5F823A3BA76009AA5E1 /* ShowDormantCellView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B5A095BB2384086800BE271B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5A095BC2384086800BE271B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B5A095C02384086800BE271B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B5A095C12384086800BE271B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		B5A095C32384086800BE271B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BlackPR/BlackPR.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 64U2JZSWWX;
+				INFOPLIST_FILE = BlackPR/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kinja.BlackPR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B5A095C42384086800BE271B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BlackPR/BlackPR.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 64U2JZSWWX;
+				INFOPLIST_FILE = BlackPR/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kinja.BlackPR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B5A095AA2384086700BE271B /* Build configuration list for PBXProject "BlackPR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5A095C02384086800BE271B /* Debug */,
+				B5A095C12384086800BE271B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5A095C22384086800BE271B /* Build configuration list for PBXNativeTarget "BlackPR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5A095C32384086800BE271B /* Debug */,
+				B5A095C42384086800BE271B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B5A095B62384086700BE271B /* BlackPR.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B5A095B72384086700BE271B /* BlackPR.xcdatamodel */,
+			);
+			currentVersion = B5A095B72384086700BE271B /* BlackPR.xcdatamodel */;
+			path = BlackPR.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = B5A095A72384086700BE271B /* Project object */;
+}

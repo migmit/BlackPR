@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="PendingPR" representedClassName="PendingPR" syncable="YES" codeGenerationType="class">
+        <attribute name="apiUrl" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="reviewer" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="pending" inverseEntity="User"/>
+    </entity>
+    <entity name="PR" representedClassName="PR" syncable="YES" codeGenerationType="class">
+        <attribute name="apiUrl" attributeType="String"/>
+        <attribute name="author" attributeType="String"/>
+        <attribute name="httpUrl" attributeType="String"/>
+        <attribute name="isApproved" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" spotlightIndexingEnabled="YES"/>
+        <attribute name="isRejected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="lastUpdated" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="number" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="owner" attributeType="String"/>
+        <attribute name="repo" attributeType="String"/>
+        <attribute name="seqId" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="waiting" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <relationship name="requested" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="requests" inverseEntity="User"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="seqId" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="token" attributeType="String"/>
+        <relationship name="pending" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PendingPR" inverseName="reviewer" inverseEntity="PendingPR"/>
+        <relationship name="requests" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PR" inverseName="requested" inverseEntity="PR"/>
+    </entity>
+    <elements>
+        <element name="PendingPR" positionX="90" positionY="-45" width="128" height="88"/>
+        <element name="PR" positionX="239.35546875" positionY="-165.94921875" width="128" height="238"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="133"/>
+    </elements>
+</model>
