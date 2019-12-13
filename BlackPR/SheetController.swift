@@ -27,10 +27,9 @@ class SheetController: NSViewController, WKNavigationDelegate {
     
     func startFromBeginning() {
         let text = "<body onload='window.location.href = &quot;https://github.com/login/oauth/authorize?client_id=48d2e93f4bc7ffc4bbb1&amp;state=\(randomString(length: 20))&amp;scope=read:user,notifications,repo&quot;'>Redirecting to GitHub...</body>"
-        LoginView.configuration.websiteDataStore.fetchDataRecords(ofTypes: [WKWebsiteDataTypeCookies]) {
-            self.LoginView.configuration.websiteDataStore.removeData(ofTypes: [WKWebsiteDataTypeCookies], for: $0) {
-                self.LoginView.loadHTMLString(text, baseURL: nil)
-            }
+        let types = WKWebsiteDataStore.allWebsiteDataTypes()
+        LoginView.configuration.websiteDataStore.removeData(ofTypes: types, modifiedSince: Date.init(timeIntervalSince1970: 0)) {
+            self.LoginView.loadHTMLString(text, baseURL: nil)
         }
     }
 
