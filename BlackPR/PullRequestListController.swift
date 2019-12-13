@@ -78,37 +78,49 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
             trigger: UNTimeIntervalNotificationTrigger(timeInterval: 0.001, repeats: false)
         )){_ in}
     }
+    
+    func findPRPlace(existing: [PR], pr: PR) -> Int {
+        guard let new = pr.lastUpdated else { return 0 }
+        return existing.firstIndex(where: {
+            $0.lastUpdated.map{$0 <= new} ?? true
+        }) ?? existing.count
+    }
         
     func insertPR(pr: PR) {
         if (pr.waiting) {
-            waitingPRs.insert(pr, at: 0)
+            let index = findPRPlace(existing: waitingPRs, pr: pr)
+            waitingPRs.insert(pr, at: index)
+            PRList.insertRows(at: IndexSet(integer: index), withAnimation: .slideDown)
         } else {
-            dormantPRs.insert(pr, at: 0)
-        }
-        if (showDormant || pr.waiting) {
-            PRList.insertRows(at: IndexSet(integer: pr.waiting ? 0 : (waitingPRs.count + 1)), withAnimation: [.slideDown])
+            let index = findPRPlace(existing: dormantPRs, pr: pr)
+            dormantPRs.insert(pr, at: index)
+            if showDormant {
+                PRList.insertRows(at: IndexSet(integer: waitingPRs.count + 1 + index), withAnimation: .slideDown)
+            }
         }
     }
     
     func makePRWaiting(pr: PR) {
         guard let oldIndex = dormantPRs.firstIndex(of: pr) else {return}
+        let newIndex = findPRPlace(existing: waitingPRs, pr: pr)
         dormantPRs.remove(at: oldIndex)
-        waitingPRs.insert(pr, at: 0)
+        waitingPRs.insert(pr, at: newIndex)
         if (showDormant) {
-            PRList.moveRow(at: oldIndex + waitingPRs.count, to: 0)
+            PRList.moveRow(at: oldIndex + waitingPRs.count, to: newIndex)
         } else {
-            PRList.insertRows(at: IndexSet(integer: 0), withAnimation: .slideDown)
+            PRList.insertRows(at: IndexSet(integer: newIndex), withAnimation: .slideDown)
         }
-        PRList.reloadData(forRowIndexes: IndexSet(integer: 0), columnIndexes: IndexSet(integer: 0))
+        PRList.reloadData(forRowIndexes: IndexSet(integer: newIndex), columnIndexes: IndexSet(integer: 0))
     }
     
     func makePRDormant(pr: PR) {
         guard let oldIndex = waitingPRs.firstIndex(of: pr) else {return}
+        let newIndex = findPRPlace(existing: dormantPRs, pr: pr)
         waitingPRs.remove(at: oldIndex)
-        dormantPRs.insert(pr, at: 0)
+        dormantPRs.insert(pr, at: newIndex)
         if (showDormant) {
-            PRList.moveRow(at: oldIndex, to: waitingPRs.count + 1)
-            PRList.reloadData(forRowIndexes: IndexSet(integer: waitingPRs.count + 1), columnIndexes: IndexSet(integer: 0))
+            PRList.moveRow(at: oldIndex, to: waitingPRs.count + 1 + newIndex)
+            PRList.reloadData(forRowIndexes: IndexSet(integer: waitingPRs.count + 1 + newIndex), columnIndexes: IndexSet(integer: 0))
         } else {
             PRList.removeRows(at: IndexSet(integer: oldIndex), withAnimation: .slideUp)
         }
