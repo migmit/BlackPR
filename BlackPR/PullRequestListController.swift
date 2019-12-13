@@ -137,23 +137,25 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
     }
     
     func createImageRect(bounds: CGSize, size: CGSize) -> CGRect {
-        if (size.width * bounds.height < size.height * bounds.width) {
-            let scaledWidth = size.width * bounds.height / size.height
+        let hgt = bounds.height - 4
+        let wdt = bounds.width - 4
+        if (size.width * hgt < size.height * wdt) {
+            let scaledWidth = size.width * hgt / size.height
             return CGRect(
-                origin: CGPoint(x: (bounds.width - scaledWidth) / 2, y: 0),
-                size: CGSize(width: scaledWidth, height: bounds.height)
+                origin: CGPoint(x: (bounds.width - scaledWidth) / 2, y: 2),
+                size: CGSize(width: scaledWidth, height: hgt)
             )
         } else {
-            let scaledHeight = size.height * bounds.width / size.width
+            let scaledHeight = size.height * wdt / size.width
             return CGRect(
-                origin: CGPoint(x: 0, y: (bounds.height - scaledHeight) / 2),
-                size: CGSize(width: bounds.width, height: scaledHeight)
+                origin: CGPoint(x: 2, y: (bounds.height - scaledHeight) / 2),
+                size: CGSize(width: wdt, height: scaledHeight)
             )
         }
     }
     
     func redrawCollapseButton(collapsed: Bool) {
-        if let image = NSImage(named: collapsed ? "NSEveryone" : "NSLeftFacingTriangleTemplate") {
+        if let image = NSImage(named: collapsed ? "NSRightFacingTriangleTemplate" : "NSLeftFacingTriangleTemplate") { // Alternative: NSEveryone
             guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {return}
             let size = collapseButton.bounds.size
             let bgImage = NSImage(size: size, flipped: false){bounds in
@@ -161,6 +163,7 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
                 guard let context = NSGraphicsContext.current?.cgContext else { return false }
                 NSColor.controlBackgroundColor.setFill()
                 context.fill(bounds)
+                context.setLineWidth(2)
                 NSColor.controlTextColor.setStroke()
                 context.stroke(bounds)
                 NSColor.controlTextColor.set()
