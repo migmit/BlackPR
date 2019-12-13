@@ -35,9 +35,7 @@ class SheetController: NSViewController, WKNavigationDelegate {
         newLoginView.navigationDelegate = LoginView.navigationDelegate
         view.replaceSubview(LoginView, with: newLoginView)
         LoginView = newLoginView
-        DispatchQueue.main.async {
-            self.LoginView.loadHTMLString(text, baseURL: nil)
-        }
+        self.LoginView.loadHTMLString(text, baseURL: nil)
     }
 
     override func viewDidLoad() {
