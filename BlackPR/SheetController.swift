@@ -11,8 +11,6 @@ import WebKit
 
 class SheetController: NSViewController, WKNavigationDelegate {
     
-    var delegate: AuthCodeDelegate?
-
     @IBOutlet weak var LoginView: WKWebView!
     
     let codePrefix = "code="
@@ -65,8 +63,8 @@ class SheetController: NSViewController, WKNavigationDelegate {
                             if let rawData = data,
                                 let jsonData = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String:Any],
                                 let token = jsonData["access_token"] as? String {
+                                NotificationCenter.default.post(name: NSNotification.Name("TokenReceived"), object: nil, userInfo: ["token": token])
                                 DispatchQueue.main.async {
-                                    self.delegate?.accessTokenReceived(token: token)
                                     self.dismiss(nil)
                                 }
                                 return

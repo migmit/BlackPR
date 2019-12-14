@@ -9,7 +9,7 @@
 import Cocoa
 import CoreData
 
-class UserListController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate, AuthCodeDelegate {
+class UserListController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate {
     
     let headerCellId = NSUserInterfaceItemIdentifier("HeaderCell")
     let dataCellId = NSUserInterfaceItemIdentifier("DataCell")
@@ -62,7 +62,10 @@ class UserListController: NSViewController, NSOutlineViewDataSource, NSOutlineVi
             if oldPR.map({$0.waiting != pr.waiting}) ?? true {
                 self.refreshAppBadge()
             }
-            return
+        }
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("TokenReceived"), object: nil, queue: OperationQueue.current) {notif in
+            guard let token = notif.userInfo?["token"] as? String else {return}
+            self.accessTokenReceived(token: token)
         }
     }
     
@@ -89,12 +92,6 @@ class UserListController: NSViewController, NSOutlineViewDataSource, NSOutlineVi
         }()
         let dockTile = NSApplication.shared.dockTile
         dockTile.badgeLabel = count > 0 ? String(count) : nil
-    }
-    
-    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        if let sheet = segue.destinationController as? SheetController {
-            sheet.delegate = self
-        }
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {

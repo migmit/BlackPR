@@ -19,7 +19,6 @@
 		B5C02A6823842E8C003A1766 /* UserListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A6723842E8C003A1766 /* UserListController.swift */; };
 		B5C02A7623844254003A1766 /* UsersSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7523844254003A1766 /* UsersSection.swift */; };
 		B5C02A782384A73A003A1766 /* SheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A772384A73A003A1766 /* SheetController.swift */; };
-		B5C02A7A23855AC6003A1766 /* AuthCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7923855AC6003A1766 /* AuthCode.swift */; };
 		B5C02A7C23859512003A1766 /* PullRequestListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7B23859512003A1766 /* PullRequestListController.swift */; };
 		B5C02A7E2385E2BC003A1766 /* UserDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7D2385E2BC003A1766 /* UserDrag.swift */; };
 		B5C02A8023871234003A1766 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C02A7F23871234003A1766 /* MainWindowController.swift */; };
@@ -49,7 +48,6 @@
 		B5C02A6723842E8C003A1766 /* UserListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListController.swift; sourceTree = "<group>"; };
 		B5C02A7523844254003A1766 /* UsersSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSection.swift; sourceTree = "<group>"; };
 		B5C02A772384A73A003A1766 /* SheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetController.swift; sourceTree = "<group>"; };
-		B5C02A7923855AC6003A1766 /* AuthCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCode.swift; sourceTree = "<group>"; };
 		B5C02A7B23859512003A1766 /* PullRequestListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestListController.swift; sourceTree = "<group>"; };
 		B5C02A7D2385E2BC003A1766 /* UserDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDrag.swift; sourceTree = "<group>"; };
 		B5C02A7F23871234003A1766 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 				B50FA5F723A3BA76009AA5E1 /* ShowDormantCellView.swift */,
 				B50FA5EF23A38430009AA5E1 /* IndicatorLight.swift */,
 				B5C02A7F23871234003A1766 /* MainWindowController.swift */,
-				B5C02A7923855AC6003A1766 /* AuthCode.swift */,
 				B5C02A772384A73A003A1766 /* SheetController.swift */,
 				B5C02A6723842E8C003A1766 /* UserListController.swift */,
 				B5C02A7D2385E2BC003A1766 /* UserDrag.swift */,
@@ -211,7 +208,6 @@
 				B5DDFA4C23A2E2DD009BF5E5 /* PRCellView.swift in Sources */,
 				B5C02A782384A73A003A1766 /* SheetController.swift in Sources */,
 				B50FA5F023A38430009AA5E1 /* IndicatorLight.swift in Sources */,
-				B5C02A7A23855AC6003A1766 /* AuthCode.swift in Sources */,
 				B5DDFA4E23A2E9EE009BF5E5 /* NSAttributedString.swift in Sources */,
 				B5EE25F3238B253200E84768 /* FetchStatus.swift in Sources */,
 				B50FA5F823A3BA76009AA5E1 /* ShowDormantCellView.swift in Sources */,
