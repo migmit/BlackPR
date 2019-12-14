@@ -67,18 +67,6 @@ class Scheduler {
             guard let userId = notif.userInfo?["userId"] as? NSManagedObjectID else {return}
             guard let pending = notif.userInfo?["pending"] as? EphemeralPending else {return}
             guard let transaction = notif.userInfo?["context"] as? NSManagedObjectContext else {return}
-            do {
-                if let pendingId = notif.userInfo?["pendingId"] as? NSManagedObjectID,
-                    let pending = try? transaction.existingObject(with: pendingId) {
-                    transaction.delete(pending)
-                    try transaction.save()
-                    transaction.parent?.perform {
-                        try? transaction.parent?.save()
-                    }
-                }
-            } catch let error as NSError {
-                print("CoreData error: \(error), \(error.userInfo)")
-            }
             if let user = try? transaction.existingObject(with: userId) as? User,
                 !user.isFault,
                 let userName = user.name,
@@ -87,29 +75,31 @@ class Scheduler {
                     reviewer: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated),
                     pending: pending
                 ) {prState in
-                    switch(prState) {
-                    case .found(let epr):
-                        print("SAVE PR: \(epr.apiUrl)")
-                        transaction.perform {
+                    transaction.perform {
+                        do {
+                            if let pendingId = notif.userInfo?["pendingId"] as? NSManagedObjectID,
+                                let pending = try? transaction.existingObject(with: pendingId) {
+                                transaction.delete(pending)
+                                try transaction.save()
+                            }
+                        } catch let error as NSError {
+                            print("CoreData error: \(error), \(error.userInfo)")
+                        }
+                        switch(prState) {
+                        case .found(let epr):
+                            print("SAVE PR: \(epr.apiUrl)")
                             let prPair = self.updater.savePR(context: transaction, user: user, ephemeralPR: epr)
                             prPair.map{prSavedHandler($0.0.objectID, $0.1)}
-                            transaction.parent?.perform {
-                                try? transaction.parent?.save()
-                            }
-                        }
-                    case .notFound:
-                        print("PR \(pending.url) NOT FOUND, MARKING DORMANT")
-                        transaction.perform {
+                        case .notFound:
+                            print("PR \(pending.url) NOT FOUND, MARKING DORMANT")
                             let prPair = self.updater.markDormant(context: transaction, user: user, apiUrl: pending.url)
                             prPair.map{prSavedHandler($0.0.objectID, $0.1)}
-                            transaction.parent?.perform {
-                                try? transaction.parent?.save()
-                            }
+                        case .otherError:
+                            print("ERROR WHILE FETCHING PR \(pending.url) ")
                         }
-                        break
-                    case .otherError:
-                        print("ERROR WHILE FETCHING PR \(pending.url) ")
-                        break
+                        transaction.parent?.perform {
+                            try? transaction.parent?.save()
+                        }
                     }
                 }
             }
