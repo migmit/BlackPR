@@ -71,8 +71,8 @@ class Scheduler {
                 if let pendingId = notif.userInfo?["pendingId"] as? NSManagedObjectID,
                     let pending = try? transaction.existingObject(with: pendingId) {
                     transaction.delete(pending)
+                    try transaction.save()
                 }
-                try transaction.save()
             } catch let error as NSError {
                 print("CoreData error: \(error), \(error.userInfo)")
             }
