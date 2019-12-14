@@ -11,6 +11,7 @@ import CoreData
 class Scheduler {
     
     let context: NSManagedObjectContext
+    let queue: OperationQueue
     
     var users: [NSManagedObjectID] = []
     var pendings: [Queued] = []
@@ -59,57 +60,64 @@ class Scheduler {
     
     init(context: NSManagedObjectContext, prSavedHandler: @escaping (NSManagedObjectID, EphemeralPR?) -> Void) {
         self.context = context
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("updateUser"), object: nil, queue: nil) {notif in
+        queue = OperationQueue()
+        queue.name = "Scheduler queue"
+        queue.maxConcurrentOperationCount = 1
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("updateUser"), object: nil, queue: queue) {notif in
             guard let userId = notif.userInfo?["userId"] as? NSManagedObjectID else {return}
             guard let transaction = notif.userInfo?["context"] as? NSManagedObjectContext else {return}
-            if let user = try? transaction.existingObject(with: userId) as? User,
-                !user.isFault,
-                let userName = user.name,
-                let token = user.token {
-                self.fetcher.fetchNotifications(
-                    user: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated)
-                ) {(eprs, status) in
-                    print("SAVE PENDINGS: \(eprs.map{$0.url})")
-                    transaction.perform {
-                        self.updater.savePendings(context: transaction, user: user, pendings: eprs, status: status)
-                        Scheduler.finalizeTransaction(transaction: transaction){}
+            transaction.perform {
+                if let user = try? transaction.existingObject(with: userId) as? User,
+                    !user.isFault,
+                    let userName = user.name,
+                    let token = user.token {
+                    self.fetcher.fetchNotifications(
+                        user: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated)
+                    ) {(eprs, status) in
+                        print("SAVE PENDINGS: \(eprs.map{$0.url})")
+                        transaction.perform {
+                            self.updater.savePendings(context: transaction, user: user, pendings: eprs, status: status)
+                            Scheduler.finalizeTransaction(transaction: transaction){}
+                        }
                     }
                 }
             }
         }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("updatePR"), object: nil, queue: nil) {notif in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("updatePR"), object: nil, queue: queue) {notif in
             guard let userId = notif.userInfo?["userId"] as? NSManagedObjectID else {return}
             guard let pending = notif.userInfo?["pending"] as? EphemeralPending else {return}
             guard let transaction = notif.userInfo?["context"] as? NSManagedObjectContext else {return}
-            if let user = try? transaction.existingObject(with: userId) as? User,
-                !user.isFault,
-                let userName = user.name,
-                let token = user.token {
-                self.fetcher.resolvePending(
-                    reviewer: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated),
-                    pending: pending
-                ) {prState in
-                    transaction.perform {
-                        if let pendingId = notif.userInfo?["pendingId"] as? NSManagedObjectID,
-                            let pending = try? transaction.existingObject(with: pendingId) {
-                            transaction.delete(pending)
-                        }
-                        let prPair: (PR, EphemeralPR?)? = {
-                            switch(prState) {
-                            case .found(let epr):
-                                print("SAVE PR: \(epr.apiUrl)")
-                                return self.updater.savePR(context: transaction, user: user, ephemeralPR: epr)
-                            case .notFound:
-                                print("PR \(pending.url) NOT FOUND, MARKING DORMANT")
-                                return self.updater.markDormant(context: transaction, user: user, apiUrl: pending.url)
-                            case .otherError:
-                                print("ERROR WHILE FETCHING PR \(pending.url) ")
-                                return nil
+            transaction.perform {
+                if let user = try? transaction.existingObject(with: userId) as? User,
+                    !user.isFault,
+                    let userName = user.name,
+                    let token = user.token {
+                    self.fetcher.resolvePending(
+                        reviewer: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated),
+                        pending: pending
+                    ) {prState in
+                        transaction.perform {
+                            if let pendingId = notif.userInfo?["pendingId"] as? NSManagedObjectID,
+                                let pending = try? transaction.existingObject(with: pendingId) {
+                                transaction.delete(pending)
                             }
-                        }()
-                        prPair.map{try? transaction.obtainPermanentIDs(for: [$0.0])}
-                        Scheduler.finalizeTransaction(transaction: transaction) {
-                            prPair.map{prSavedHandler($0.0.objectID, $0.1)}
+                            let prPair: (PR, EphemeralPR?)? = {
+                                switch(prState) {
+                                case .found(let epr):
+                                    print("SAVE PR: \(epr.apiUrl)")
+                                    return self.updater.savePR(context: transaction, user: user, ephemeralPR: epr)
+                                case .notFound:
+                                    print("PR \(pending.url) NOT FOUND, MARKING DORMANT")
+                                    return self.updater.markDormant(context: transaction, user: user, apiUrl: pending.url)
+                                case .otherError:
+                                    print("ERROR WHILE FETCHING PR \(pending.url) ")
+                                    return nil
+                                }
+                            }()
+                            prPair.map{try? transaction.obtainPermanentIDs(for: [$0.0])}
+                            Scheduler.finalizeTransaction(transaction: transaction) {
+                                prPair.map{prSavedHandler($0.0.objectID, $0.1)}
+                            }
                         }
                     }
                 }
