@@ -25,26 +25,23 @@ class Updater {
             let pendingRequest: NSFetchRequest<PendingPR> = PendingPR.fetchRequest()
             pendingRequest.predicate = NSPredicate(format: "apiUrl IN %@ AND reviewer == %@", newUrls.map{$0.url}, user)
             let pendingPRs = try context.fetch(pendingRequest)
-            do {
-                newUrls.forEach {newUrl in
-                    if let existing = pendingPRs.first(where: {pending in
-                        pending.apiUrl.flatMap{$0 == newUrl.url} ?? false
-                    }) {
-                        if (existing.timestamp.map{$0 < newUrl.timestamp} ?? true) {
-                            existing.timestamp = newUrl.timestamp
-                        }
-                    } else {
-                        let newPending = PendingPR(context: context)
-                        newPending.apiUrl = newUrl.url
-                        newPending.timestamp = newUrl.timestamp
-                        newPending.reviewer = user
+            newUrls.forEach {newUrl in
+                if let existing = pendingPRs.first(where: {pending in
+                    pending.apiUrl.flatMap{$0 == newUrl.url} ?? false
+                }) {
+                    if (existing.timestamp.map{$0 < newUrl.timestamp} ?? true) {
+                        existing.timestamp = newUrl.timestamp
                     }
+                } else {
+                    let newPending = PendingPR(context: context)
+                    newPending.apiUrl = newUrl.url
+                    newPending.timestamp = newUrl.timestamp
+                    newPending.reviewer = user
                 }
-                if let maxTime = pendings.map({$0.timestamp}).max() {
-                    user.lastUpdated = user.lastUpdated.map{max($0 + 1, maxTime)} ?? maxTime
-                }
-                try context.save()
-            } catch {}
+            }
+            if let maxTime = pendings.map({$0.timestamp}).max() {
+                user.lastUpdated = user.lastUpdated.map{max($0 + 1, maxTime)} ?? maxTime
+            }
         } catch let error as NSError {
             print("CoreData error: \(error), \(error.userInfo)")
         }
@@ -107,7 +104,6 @@ class Updater {
             pr.repo = ephemeralPR.repo
             pr.title = ephemeralPR.title
             pr.waiting = ephemeralPR.waiting
-            try context.save()
             return prPair
         } catch {
             return nil
@@ -123,7 +119,6 @@ class Updater {
             existingPRs.dropFirst().forEach{context.delete($0)}
             let waiting = existingPR.waiting
             existingPR.waiting = false
-            try? context.save()
             if let apiUrl = existingPR.apiUrl,
                 let author = existingPR.author,
                 let httpUrl = existingPR.httpUrl,
