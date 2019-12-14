@@ -99,7 +99,7 @@ class Fetcher {
         }
     }
     
-    func fetchNotifications(user: EphemeralUser, completionHandler: @escaping (_ pendings: [EphemeralPending], _ status: FetchStatus) -> Void) {
+    func fetchNotifications(user: EphemeralUser, completionHandler: @escaping (_ pendings: [EphemeralPending]) -> Void) {
         print("Resolving user: \(user.name)")
         let since = user.lastUpdated.map{"&since=\(ISO8601DateFormatter().string(from: $0 - 1))"} ?? ""
         let url = URL(string: "https://api.github.com/notifications?all=true\(since)")!
@@ -107,13 +107,13 @@ class Fetcher {
     }
     
     func fetchNotificationWorker(url: URL, token: String, acc: [EphemeralPending],
-                                 completionHandler: @escaping (_ pendings: [EphemeralPending], _ status: FetchStatus) -> Void
+                                 completionHandler: @escaping (_ pendings: [EphemeralPending]) -> Void
     ) {
         var request = URLRequest(url: url)
         request.addValue("token \(token)", forHTTPHeaderField: "Authorization")
         urlSession.dataTask(with: request) {(data, response, error) in
             if (error != nil) {
-                completionHandler(acc, .Error)
+                completionHandler(acc)
             } else {
                 if let rawData = data,
                     let httpResponse = response as? HTTPURLResponse,
@@ -143,10 +143,10 @@ class Fetcher {
                         let nextUrl = URL(string: next){
                         self.fetchNotificationWorker(url: nextUrl, token: token, acc: acc + newAcc, completionHandler: completionHandler)
                     } else {
-                        completionHandler(acc + newAcc, .Success)
+                        completionHandler(acc + newAcc)
                     }
                 } else {
-                    completionHandler(acc, .Error)
+                    completionHandler(acc)
                 }
             }
         }.resume()

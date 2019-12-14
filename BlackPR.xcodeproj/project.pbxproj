@@ -28,7 +28,6 @@
 		B5EE25ED238B22E000E84768 /* EphemeralPR.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25EC238B22E000E84768 /* EphemeralPR.swift */; };
 		B5EE25EF238B233400E84768 /* EphemeralPending.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25EE238B233400E84768 /* EphemeralPending.swift */; };
 		B5EE25F1238B249B00E84768 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25F0238B249B00E84768 /* Updater.swift */; };
-		B5EE25F3238B253200E84768 /* FetchStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25F2238B253200E84768 /* FetchStatus.swift */; };
 		B5EE25F5238B27AB00E84768 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EE25F4238B27AB00E84768 /* Scheduler.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +56,6 @@
 		B5EE25EC238B22E000E84768 /* EphemeralPR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralPR.swift; sourceTree = "<group>"; };
 		B5EE25EE238B233400E84768 /* EphemeralPending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralPending.swift; sourceTree = "<group>"; };
 		B5EE25F0238B249B00E84768 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
-		B5EE25F2238B253200E84768 /* FetchStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStatus.swift; sourceTree = "<group>"; };
 		B5EE25F4238B27AB00E84768 /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,7 +103,6 @@
 				B5C02A7523844254003A1766 /* UsersSection.swift */,
 				B5C02A7B23859512003A1766 /* PullRequestListController.swift */,
 				B545A7AE2387EAF0009E2B24 /* Fetcher.swift */,
-				B5EE25F2238B253200E84768 /* FetchStatus.swift */,
 				B54BC74323A4EE980016B051 /* PRState.swift */,
 				B5EE25F0238B249B00E84768 /* Updater.swift */,
 				B5DDFA4523A130F8009BF5E5 /* EphemeralUser.swift */,
@@ -209,7 +206,6 @@
 				B5C02A782384A73A003A1766 /* SheetController.swift in Sources */,
 				B50FA5F023A38430009AA5E1 /* IndicatorLight.swift in Sources */,
 				B5DDFA4E23A2E9EE009BF5E5 /* NSAttributedString.swift in Sources */,
-				B5EE25F3238B253200E84768 /* FetchStatus.swift in Sources */,
 				B50FA5F823A3BA76009AA5E1 /* ShowDormantCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

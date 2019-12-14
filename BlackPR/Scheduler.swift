@@ -73,10 +73,10 @@ class Scheduler {
                     let token = user.token {
                     self.fetcher.fetchNotifications(
                         user: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated)
-                    ) {(eprs, status) in
+                    ) {eprs in
                         print("SAVE PENDINGS: \(eprs.map{$0.url})")
                         transaction.perform {
-                            self.updater.savePendings(context: transaction, user: user, pendings: eprs, status: status)
+                            self.updater.savePendings(context: transaction, user: user, pendings: eprs)
                             Scheduler.finalizeTransaction(transaction: transaction){}
                         }
                     }

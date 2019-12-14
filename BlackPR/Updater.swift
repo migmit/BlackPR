@@ -10,7 +10,7 @@ import CoreData
 
 class Updater {
     
-    func savePendings(context: NSManagedObjectContext, user: User, pendings: [EphemeralPending], status: FetchStatus) {
+    func savePendings(context: NSManagedObjectContext, user: User, pendings: [EphemeralPending]) {
         let prRequest: NSFetchRequest<PR> = PR.fetchRequest()
         prRequest.predicate = NSPredicate(format: "apiUrl IN %@ AND requested == %@", pendings.map{$0.url}, user)
         do {
