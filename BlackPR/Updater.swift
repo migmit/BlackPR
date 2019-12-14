@@ -120,23 +120,23 @@ class Updater {
         guard let existingPRs = try? context.fetch(existingRequest) else { return nil }
         if (existingPRs.count > 0) {
             let existingPR = existingPRs[0]
-                existingPRs.dropFirst().forEach{context.delete($0)}
-                let waiting = existingPR.waiting
-                existingPR.waiting = false
-                try? context.save()
-                if let apiUrl = existingPR.apiUrl,
-                    let author = existingPR.author,
-                    let httpUrl = existingPR.httpUrl,
-                    let lastUpdated = existingPR.lastUpdated,
-                    let owner = existingPR.owner,
-                    let repo = existingPR.repo,
-                    let title = existingPR.title {
-                    return (existingPR, EphemeralPR(apiUrl: apiUrl, author: author, httpUrl: httpUrl, isApproved: existingPR.isApproved, isRejected: existingPR.isRejected, lastUpdated: lastUpdated, number: Int(existingPR.number), owner: owner, repo: repo, title: title, waiting: waiting))
-                    } else {
-                        return nil
-                    }
-            } else {
-                return nil
-            }
+            existingPRs.dropFirst().forEach{context.delete($0)}
+            let waiting = existingPR.waiting
+            existingPR.waiting = false
+            try? context.save()
+            if let apiUrl = existingPR.apiUrl,
+                let author = existingPR.author,
+                let httpUrl = existingPR.httpUrl,
+                let lastUpdated = existingPR.lastUpdated,
+                let owner = existingPR.owner,
+                let repo = existingPR.repo,
+                let title = existingPR.title {
+                return (existingPR, EphemeralPR(apiUrl: apiUrl, author: author, httpUrl: httpUrl, isApproved: existingPR.isApproved, isRejected: existingPR.isRejected, lastUpdated: lastUpdated, number: Int(existingPR.number), owner: owner, repo: repo, title: title, waiting: waiting))
+                } else {
+                    return nil
+                }
+        } else {
+            return nil
+        }
     }
 }
