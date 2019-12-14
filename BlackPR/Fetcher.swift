@@ -13,7 +13,7 @@ class Fetcher {
     let urlSession = URLSession(configuration: .ephemeral)
     let nextSuffix = "; rel=\"next\""
     
-    func resolvePending(reviewer: EphemeralUser, pending: EphemeralPending, completionHandler: @escaping (_ ephemeralPR: EphemeralPR?) -> Void) {
+    func resolvePending(reviewer: EphemeralUser, pending: EphemeralPending, completionHandler: @escaping (_ prState: PRState) -> Void) {
         print("Resolving PR: \(pending.url)")
         if let url = URL(string: pending.url) {
             var request = URLRequest(url: url)
@@ -22,7 +22,7 @@ class Fetcher {
                 if error == nil {
                     if let httpResponse = response as? HTTPURLResponse {
                         if httpResponse.statusCode == 404 {
-                            completionHandler(nil)
+                            completionHandler(.notFound)
                         } else {
                             if let rawData = data,
                                 let jsonData = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any],
@@ -86,11 +86,11 @@ class Fetcher {
                                             title: title,
                                             waiting: waiting
                                         )
-                                        completionHandler(ephPR)
+                                        completionHandler(.found(ephPR))
                                     }.resume()
                                 }
                             } else {
-                                completionHandler(nil)
+                                completionHandler(.otherError)
                             }
                         }
                     }
