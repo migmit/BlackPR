@@ -9,7 +9,7 @@
 import Cocoa
 import UserNotifications
 
-class PullRequestListController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, UNUserNotificationCenterDelegate {
+class PullRequestListController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, UNUserNotificationCenterDelegate, NSUserInterfaceValidations {
     
     let prCellId = NSUserInterfaceItemIdentifier("PRCell")
     let showCellId = NSUserInterfaceItemIdentifier("ShowCell")
@@ -249,6 +249,10 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
             let url = pr.apiUrl {
             Scheduler.updatePR(context: ctx, userId: usr.objectID, pending: EphemeralPending(url: url, timestamp: Date()), pendingId: nil)
         }
+    }
+    
+    func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
+        return !(item is NSMenuItem) || PRList.clickedRow != waitingPRs.count
     }
     
     @IBAction func showDormantClick(_ sender: NSButton) {
