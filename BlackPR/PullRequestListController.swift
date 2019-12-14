@@ -53,7 +53,7 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
             }
             return
         }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("UserChanged"), object: nil, queue: nil){notif in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("UserChanged"), object: nil, queue: OperationQueue.current){notif in
             guard let user = notif.userInfo?["user"] as? User else {return}
             self.displayPRs(user: user)
         }
