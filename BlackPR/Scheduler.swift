@@ -72,6 +72,9 @@ class Scheduler {
                     let pending = try? transaction.existingObject(with: pendingId) {
                     transaction.delete(pending)
                     try transaction.save()
+                    transaction.parent?.perform {
+                        try? transaction.parent?.save()
+                    }
                 }
             } catch let error as NSError {
                 print("CoreData error: \(error), \(error.userInfo)")
@@ -90,12 +93,18 @@ class Scheduler {
                         transaction.perform {
                             let prPair = self.updater.savePR(context: transaction, user: user, ephemeralPR: epr)
                             prPair.map{prSavedHandler($0.0.objectID, $0.1)}
+                            transaction.parent?.perform {
+                                try? transaction.parent?.save()
+                            }
                         }
                     case .notFound:
                         print("PR \(pending.url) NOT FOUND, MARKING DORMANT")
                         transaction.perform {
                             let prPair = self.updater.markDormant(context: transaction, user: user, apiUrl: pending.url)
                             prPair.map{prSavedHandler($0.0.objectID, $0.1)}
+                            transaction.parent?.perform {
+                                try? transaction.parent?.save()
+                            }
                         }
                         break
                     case .otherError:
@@ -103,9 +112,6 @@ class Scheduler {
                         break
                     }
                 }
-            }
-            transaction.parent?.perform {
-                try? transaction.parent?.save()
             }
         }
         Timer.scheduledTimer(withTimeInterval: 5, repeats: true) {_ in
