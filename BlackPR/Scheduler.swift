@@ -73,14 +73,17 @@ class Scheduler {
                     ) {eprs in
                         print("SAVE PENDINGS: \(eprs.map{$0.url})")
                         transaction.perform {
+                            let firstTime = user.lastUpdated == nil
                             let newPendings = self.updater.savePendings(context: transaction, user: user, pendings: eprs)
-                            do {
-                                try transaction.obtainPermanentIDs(for: newPendings.map{$0.0})
-                                newPendings.prefix(3).forEach{
-                                    Scheduler.updatePR(context: nil, userId: userId, pending: $0.1, pendingId: $0.0.objectID)
+                            if firstTime {
+                                do {
+                                    try transaction.obtainPermanentIDs(for: newPendings.map{$0.0})
+                                    newPendings.prefix(3).forEach{
+                                        Scheduler.updatePR(context: nil, userId: userId, pending: $0.1, pendingId: $0.0.objectID)
+                                    }
+                                } catch let error as NSError {
+                                    print("CoreData error: \(error), \(error.userInfo)")
                                 }
-                            } catch let error as NSError {
-                                print("CoreData error: \(error), \(error.userInfo)")
                             }
                             Scheduler.finalizeTransaction(transaction: transaction){}
                         }
