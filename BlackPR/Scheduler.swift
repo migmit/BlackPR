@@ -20,17 +20,14 @@ class Scheduler {
     let fetcher = Fetcher()
     let updater = Updater()
     
-    static func updateUser(context: NSManagedObjectContext, userId: NSManagedObjectID) {
+    static func updateUser(context: NSManagedObjectContext?, userId: NSManagedObjectID) {
         NotificationCenter.default.post(
             name: NSNotification.Name("updateUser"),
             object: nil,
-            userInfo: [
-                "userId": userId,
-                "context": context
-        ])
+            userInfo: Dictionary(flatten: ["userId": userId, "context": context]))
     }
     
-    static func updatePR(context: NSManagedObjectContext, userId: NSManagedObjectID, pending: EphemeralPending, pendingId: NSManagedObjectID?) {
+    static func updatePR(context: NSManagedObjectContext?, userId: NSManagedObjectID, pending: EphemeralPending, pendingId: NSManagedObjectID?) {
         NotificationCenter.default.post(
             name: NSNotification.Name("updatePR"),
             object: nil,
@@ -61,7 +58,11 @@ class Scheduler {
         queue.maxConcurrentOperationCount = 1
         NotificationCenter.default.addObserver(forName: NSNotification.Name("updateUser"), object: nil, queue: queue) {notif in
             guard let userId = notif.userInfo?["userId"] as? NSManagedObjectID else {return}
-            guard let transaction = notif.userInfo?["context"] as? NSManagedObjectContext else {return}
+            let transaction = notif.userInfo?["context"] as? NSManagedObjectContext ?? {
+                let t = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+                t.parent = context
+                return t
+            }()
             transaction.perform {
                 if let user = try? transaction.existingObject(with: userId) as? User,
                     !user.isFault,
@@ -82,7 +83,11 @@ class Scheduler {
         NotificationCenter.default.addObserver(forName: NSNotification.Name("updatePR"), object: nil, queue: queue) {notif in
             guard let userId = notif.userInfo?["userId"] as? NSManagedObjectID else {return}
             guard let pending = notif.userInfo?["pending"] as? EphemeralPending else {return}
-            guard let transaction = notif.userInfo?["context"] as? NSManagedObjectContext else {return}
+            let transaction = notif.userInfo?["context"] as? NSManagedObjectContext ?? {
+                let t = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+                t.parent = context
+                return t
+            }()
             transaction.perform {
                 if let user = try? transaction.existingObject(with: userId) as? User,
                     !user.isFault,

@@ -244,10 +244,9 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
     @IBAction func refreshMenu(_ sender: NSMenuItem) {
         let index = PRList.clickedRow
         if let pr = getPR(index: index),
-            let ctx = context,
             let usr = user,
             let url = pr.apiUrl {
-            Scheduler.updatePR(context: ctx, userId: usr.objectID, pending: EphemeralPending(url: url, timestamp: Date()), pendingId: nil)
+            Scheduler.updatePR(context: nil, userId: usr.objectID, pending: EphemeralPending(url: url, timestamp: Date()), pendingId: nil)
         }
     }
     
