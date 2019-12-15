@@ -118,9 +118,9 @@ class UserListController: NSViewController, NSOutlineViewDataSource, NSOutlineVi
     
     func outlineView(_ outlineView: NSOutlineView, viewFor: NSTableColumn?, item: Any) -> NSView? {
         if item is UsersSection {
-            return outlineView.makeView(withIdentifier: headerCellId, owner: self) as? NSTableCellView
+            return outlineView.makeView(withIdentifier: headerCellId, owner: self) as? UsersHeaderView
         } else if let user = item as? User {
-            let cell = outlineView.makeView(withIdentifier: dataCellId, owner: self) as? NSTableCellView
+            let cell = outlineView.makeView(withIdentifier: dataCellId, owner: self) as? UserCellView
             cell?.textField?.stringValue = user.name ?? "Unknown"
             return cell
         } else {
