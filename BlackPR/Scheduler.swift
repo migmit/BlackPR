@@ -34,11 +34,7 @@ class Scheduler {
         NotificationCenter.default.post(
             name: NSNotification.Name("updatePR"),
             object: nil,
-            userInfo: [
-                "userId": userId,
-                "pending": pending,
-                "context": context
-                ].merging(pendingId.map{["pendingId": $0]} ?? [:], uniquingKeysWith: {$1})
+            userInfo: Dictionary(flatten: ["userId": userId, "pending": pending, "pendingId": pendingId, "context": context])
         )
     }
     

@@ -17,8 +17,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         scheduler = Scheduler(context: persistentContainer.viewContext) {
-            let notifData = ["prId": $0].merging($1.map{["oldPR": $0]} ?? [:], uniquingKeysWith: {$1})
-            NotificationCenter.default.post(name: NSNotification.Name("PRSaved"), object: nil, userInfo: notifData)
+            NotificationCenter.default.post(
+                name: NSNotification.Name("PRSaved"),
+                object: nil,
+                userInfo: Dictionary(flatten: ["prId": $0, "oldPR": $1])
+            )
         }
     }
 

@@ -66,9 +66,7 @@ class Fetcher {
                                         } ()
                                         let reviewsMap: [String: Review] = reviews.reduce([:]) {(accumulator, nextReview) in
                                             if (accumulator[nextReview.reviewer].map{$0.timestamp < nextReview.timestamp}) ?? true {
-                                                return accumulator.merging([nextReview.reviewer : nextReview]) {
-                                                    return $1
-                                                }
+                                                return accumulator.merging([nextReview.reviewer : nextReview]) {$1}
                                             } else {
                                                 return accumulator
                                             }
