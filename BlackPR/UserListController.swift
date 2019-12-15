@@ -279,7 +279,9 @@ class UserListController: NSViewController, NSOutlineViewDataSource, NSOutlineVi
             newUser.token = token
             newUser.seqId = (users.map{$0.seqId}.max() ?? 0) + 1
             do {
+                try context!.obtainPermanentIDs(for: [newUser])
                 try context!.save()
+                Scheduler.updateUser(context: nil, userId: newUser.objectID)
                 let newIndexSet = IndexSet(integer: UserList.numberOfChildren(ofItem: UsersSection.instance))
                 users.append(newUser)
                 UserList.insertItems(at: newIndexSet, inParent: UsersSection.instance, withAnimation: [])
