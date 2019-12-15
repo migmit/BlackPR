@@ -10,7 +10,7 @@ import CoreData
 
 class Updater {
     
-    func savePendings(context: NSManagedObjectContext, user: User, pendings: [EphemeralPending]) {
+    func savePendings(context: NSManagedObjectContext, user: User, pendings: [EphemeralPending]) -> [(PendingPR, EphemeralPending)] {
         let prRequest: NSFetchRequest<PR> = PR.fetchRequest()
         prRequest.predicate = NSPredicate(format: "apiUrl IN %@ AND requested == %@", pendings.map{$0.url}, user)
         do {
@@ -22,28 +22,20 @@ class Updater {
                     return sameUrl && alreadyUpdated
                 }) == nil
             }
-            let pendingRequest: NSFetchRequest<PendingPR> = PendingPR.fetchRequest()
-            pendingRequest.predicate = NSPredicate(format: "apiUrl IN %@ AND reviewer == %@", newUrls.map{$0.url}, user)
-            let pendingPRs = try context.fetch(pendingRequest)
-            newUrls.forEach {newUrl in
-                if let existing = pendingPRs.first(where: {pending in
-                    pending.apiUrl.flatMap{$0 == newUrl.url} ?? false
-                }) {
-                    if (existing.timestamp.map{$0 < newUrl.timestamp} ?? true) {
-                        existing.timestamp = newUrl.timestamp
-                    }
-                } else {
-                    let newPending = PendingPR(context: context)
-                    newPending.apiUrl = newUrl.url
-                    newPending.timestamp = newUrl.timestamp
-                    newPending.reviewer = user
-                }
+            let newPendings: [(PendingPR, EphemeralPending)] = newUrls.map {newUrl in
+                let newPending = PendingPR(context: context)
+                newPending.apiUrl = newUrl.url
+                newPending.timestamp = newUrl.timestamp
+                newPending.reviewer = user
+                return (newPending, newUrl)
             }
             if let maxTime = pendings.map({$0.timestamp}).max() {
                 user.lastUpdated = user.lastUpdated.map{max($0 + 1, maxTime)} ?? maxTime
             }
+            return newPendings
         } catch let error as NSError {
             print("CoreData error: \(error), \(error.userInfo)")
+            return []
         }
     }
 
