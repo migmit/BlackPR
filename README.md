@@ -1,5 +1,9 @@
 # BlackPR
 
+## Downloads
+
+Current release: https://github.com/migmit/BlackPR/releases/latest/download/BlackPR.zip
+
 ## FAQ
 
 - Q: Why does this program requests access to my code? What is it going to commit?
