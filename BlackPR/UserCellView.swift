@@ -11,4 +11,8 @@ import Cocoa
 class UserCellView: NSTableCellView {
     
     @IBOutlet weak var RemoveButton: NSButton!
+    
+    func handleHover(entered: Bool) {
+        RemoveButton.isHidden = !entered
+    }
 }

@@ -17,19 +17,19 @@ class UserListView: NSOutlineView {
         addTrackingArea(NSTrackingArea(rect: frame, options: [.mouseMoved, .mouseEnteredAndExited, .activeInActiveApp], owner: self, userInfo: nil))
     }
     
-    func showhide(cell: NSView, hide: Bool) {
+    func showhide(cell: NSView, show: Bool) {
         if let usersHeaderView = cell as? UsersHeaderView {
-            usersHeaderView.AddButton.isHidden = hide
+            usersHeaderView.handleHover(entered: show)
         } else if let userCellView = cell as? UserCellView {
-            userCellView.RemoveButton.isHidden = hide
+            userCellView.handleHover(entered: show)
         }
     }
     
     func handleTracking(cellOpt: NSView?) {
         if cellOpt != oldHoverCell {
-            oldHoverCell.map{showhide(cell: $0, hide: true)}
+            oldHoverCell.map{showhide(cell: $0, show: false)}
             oldHoverCell = cellOpt
-            cellOpt.map{showhide(cell: $0, hide: false)}
+            cellOpt.map{showhide(cell: $0, show: true)}
         }
     }
 

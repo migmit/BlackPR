@@ -11,4 +11,8 @@ import Cocoa
 class UsersHeaderView: NSTableCellView {
     
     @IBOutlet weak var AddButton: NSButton!
+    
+    func handleHover(entered: Bool) {
+        AddButton.isHidden = !entered
+    }
 }
