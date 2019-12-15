@@ -49,7 +49,9 @@ class UserListController: NSViewController, NSOutlineViewDataSource, NSOutlineVi
                 self.addUser()
             }
         }
-        (parent as? MainViewController)?.collapseSidebar(doCollapse: users.count == 1)
+        if (users.count == 1) {
+            (parent as? MainViewController)?.collapseSidebar()
+        }
     }
     
     override func viewDidLoad() {

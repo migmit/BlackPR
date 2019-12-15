@@ -17,12 +17,10 @@ class MainViewController: NSSplitViewController {
         // Do view setup here.
     }
     
-    func collapseSidebar(doCollapse: Bool) {
+    func collapseSidebar() {
         let listItem = splitViewItems[0]
         let prItem = splitViewItems[1]
-        if doCollapse {
-            listItem.isCollapsed.toggle()
-        }
+        listItem.isCollapsed.toggle()
         (prItem.viewController as? PullRequestListController)?.redrawCollapseButton(collapsed: listItem.isCollapsed)
     }
     

@@ -188,7 +188,7 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
     }
     
     func collapseSidebar() {
-        (parent as? MainViewController)?.collapseSidebar(doCollapse: true)
+        (parent as? MainViewController)?.collapseSidebar()
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
