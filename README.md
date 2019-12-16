@@ -2,7 +2,7 @@
 
 ## Downloads
 
-Current release: https://github.com/migmit/BlackPR/releases/latest/download/BlackPR.zip
+Current release: https://github.com/migmit/BlackPR/releases/latest/download/BlackPR.dmg
 
 ## FAQ
 
@@ -30,7 +30,7 @@ Current release: https://github.com/migmit/BlackPR/releases/latest/download/Blac
 
   A: It's a GitHub bug. Sometimes it loses information about reviews of old pull requests. Manual refreshing, unfortunately, won't help. There isn't anything that can be done. Not sure yet how old that pull request should be.
 
-- Q: Can this program be used for tracking pull requests on private GitHub instances, or GitLab?
+- Q: Can this program be used for tracking pull requests on private GitHub instances, GitLab, BitBucket, or something else?
 
   A: No, not at the moment. This is one of the features that probably would be added in the future. Stay tuned.
 
