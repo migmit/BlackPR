@@ -42,3 +42,10 @@ Current release: https://github.com/migmit/BlackPR/releases/latest/download/Blac
 
   A: Most likely, unless you know me personally, you should wait until the heat death of the universe.
 
+- Q: Those notifications are super annoying! Can I turn them off?
+
+  A: It's macOS, you can turn off notifications from any program, not just this one. Just go to System Preferences -> Notifications. Note that there is a separate checkbox there for an application badge — you might want to leave it as it is.\
+
+- Q: App's window just stays on my desktop — can I remove it, while still working with the app?
+
+  A: Sure, just use macOS "Hide" feature — basically, press Cmd+H, and it will go away.
