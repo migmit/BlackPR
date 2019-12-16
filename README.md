@@ -2,7 +2,7 @@
 
 ## Downloads
 
-Current release: https://github.com/migmit/BlackPR/releases/latest/download/BlackPR.zip
+Current release: https://github.com/migmit/BlackPR/releases/latest/download/BlackPR.dmg
 
 ## FAQ
 
