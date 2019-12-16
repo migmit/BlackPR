@@ -43,9 +43,10 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
                 if let old = oldPR {
                     if (pr.waiting && !old.waiting) {
                         self.makePRWaiting(pr: pr)
-                    }
-                    if (!pr.waiting && old.waiting) {
+                    } else if (!pr.waiting && old.waiting) {
                         self.makePRDormant(pr: pr)
+                    } else {
+                        self.refreshPR(pr: pr)
                     }
                 } else {
                     self.insertPR(pr: pr)
@@ -123,6 +124,14 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
             PRList.reloadData(forRowIndexes: IndexSet(integer: waitingPRs.count + 1 + newIndex), columnIndexes: IndexSet(integer: 0))
         } else {
             PRList.removeRows(at: IndexSet(integer: oldIndex), withAnimation: .slideUp)
+        }
+    }
+    
+    func refreshPR(pr: PR) {
+        if let waitingIndex = waitingPRs.firstIndex(of: pr) {
+            PRList.reloadData(forRowIndexes: IndexSet(integer: waitingIndex), columnIndexes: IndexSet(integer: 0))
+        } else if let dormantIndex = dormantPRs.firstIndex(of: pr) {
+            PRList.reloadData(forRowIndexes: IndexSet(integer: waitingPRs.count + 1 + dormantIndex), columnIndexes: IndexSet(integer: 0))
         }
     }
     
