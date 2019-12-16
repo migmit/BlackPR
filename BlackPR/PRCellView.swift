@@ -69,7 +69,7 @@ class PRCellView: NSTableCellView {
             }
         }
 
-        statusLight.needsToDraw(dirtyRect)
+        statusLight.setNeedsDisplay(dirtyRect)
     }
     
 }
