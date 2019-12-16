@@ -58,6 +58,7 @@ class PullRequestListController: NSViewController, NSTableViewDataSource, NSTabl
             guard let user = notif.userInfo?["user"] as? User else {return}
             self.displayPRs(user: user)
         }
+        redrawCollapseButton(collapsed: false)
     }
     
     override func viewWillAppear() {
