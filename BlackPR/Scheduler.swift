@@ -24,12 +24,80 @@ class Scheduler {
             userInfo: Dictionary(flatten: ["userId": userId, "context": context]))
     }
     
+    static func updateUserWorker(context: NSManagedObjectContext, userId: NSManagedObjectID) {
+        context.perform {
+            if let user = try? context.existingObject(with: userId) as? User,
+                !user.isFault,
+                let userName = user.name,
+                let token = user.token {
+                Fetcher.fetchNotifications(
+                    user: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated)
+                ) {eprs in
+                    print("SAVE PENDINGS: \(eprs.map{$0.url})")
+                    context.perform {
+                        let firstTime = user.lastUpdated == nil
+                        let newPendings = Updater.savePendings(context: context, user: user, pendings: eprs)
+                        if firstTime {
+                            do {
+                                try context.obtainPermanentIDs(for: newPendings.map{$0.0})
+                                newPendings.prefix(3).forEach{
+                                    Scheduler.updatePR(context: nil, userId: userId, pending: $0.1, pendingId: $0.0.objectID)
+                                }
+                            } catch let error as NSError {
+                                print("CoreData error: \(error), \(error.userInfo)")
+                            }
+                        }
+                        Scheduler.finalizeTransaction(transaction: context){}
+                    }
+                }
+            }
+        }
+    }
+    
     static func updatePR(context: NSManagedObjectContext?, userId: NSManagedObjectID, pending: EphemeralPending, pendingId: NSManagedObjectID?) {
         NotificationCenter.default.post(
             name: NSNotification.Name("updatePR"),
             object: nil,
             userInfo: Dictionary(flatten: ["userId": userId, "pending": pending, "pendingId": pendingId, "context": context])
         )
+    }
+    
+    static func updatePRWorking(context: NSManagedObjectContext, userId: NSManagedObjectID, pending: EphemeralPending, pendingId: NSManagedObjectID?, prSavedHandler: @escaping (NSManagedObjectID, EphemeralPR?) -> Void) {
+        context.perform {
+            if let user = try? context.existingObject(with: userId) as? User,
+                !user.isFault,
+                let userName = user.name,
+                let token = user.token {
+                Fetcher.resolvePending(
+                    reviewer: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated),
+                    pending: pending
+                ) {prState in
+                    context.perform {
+                        if let pId = pendingId,
+                            let pending = try? context.existingObject(with: pId) {
+                            context.delete(pending)
+                        }
+                        let prPair: (PR, EphemeralPR?)? = {
+                            switch(prState) {
+                            case .found(let epr):
+                                print("SAVE PR: \(epr.apiUrl)")
+                                return Updater.savePR(context: context, user: user, ephemeralPR: epr)
+                            case .notFound:
+                                print("PR \(pending.url) NOT FOUND, MARKING DORMANT")
+                                return Updater.markDormant(context: context, user: user, apiUrl: pending.url)
+                            case .otherError:
+                                print("ERROR WHILE FETCHING PR \(pending.url) ")
+                                return nil
+                            }
+                        }()
+                        prPair.map{try? context.obtainPermanentIDs(for: [$0.0])}
+                        Scheduler.finalizeTransaction(transaction: context) {
+                            prPair.map{prSavedHandler($0.0.objectID, $0.1)}
+                        }
+                    }
+                }
+            }
+        }
     }
     
     static func finalizeTransaction(transaction: NSManagedObjectContext, continuationHandler: @escaping () -> Void) {
@@ -60,33 +128,7 @@ class Scheduler {
                 t.parent = context
                 return t
             }()
-            transaction.perform {
-                if let user = try? transaction.existingObject(with: userId) as? User,
-                    !user.isFault,
-                    let userName = user.name,
-                    let token = user.token {
-                    Fetcher.fetchNotifications(
-                        user: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated)
-                    ) {eprs in
-                        print("SAVE PENDINGS: \(eprs.map{$0.url})")
-                        transaction.perform {
-                            let firstTime = user.lastUpdated == nil
-                            let newPendings = Updater.savePendings(context: transaction, user: user, pendings: eprs)
-                            if firstTime {
-                                do {
-                                    try transaction.obtainPermanentIDs(for: newPendings.map{$0.0})
-                                    newPendings.prefix(3).forEach{
-                                        Scheduler.updatePR(context: nil, userId: userId, pending: $0.1, pendingId: $0.0.objectID)
-                                    }
-                                } catch let error as NSError {
-                                    print("CoreData error: \(error), \(error.userInfo)")
-                                }
-                            }
-                            Scheduler.finalizeTransaction(transaction: transaction){}
-                        }
-                    }
-                }
-            }
+            Scheduler.updateUserWorker(context: transaction, userId: userId)
         }
         NotificationCenter.default.addObserver(forName: NSNotification.Name("updatePR"), object: nil, queue: queue) {notif in
             guard let userId = notif.userInfo?["userId"] as? NSManagedObjectID else {return}
@@ -96,55 +138,32 @@ class Scheduler {
                 t.parent = context
                 return t
             }()
-            transaction.perform {
-                if let user = try? transaction.existingObject(with: userId) as? User,
-                    !user.isFault,
-                    let userName = user.name,
-                    let token = user.token {
-                    Fetcher.resolvePending(
-                        reviewer: EphemeralUser(name: userName, token: token, lastUpdated: user.lastUpdated),
-                        pending: pending
-                    ) {prState in
-                        transaction.perform {
-                            if let pendingId = notif.userInfo?["pendingId"] as? NSManagedObjectID,
-                                let pending = try? transaction.existingObject(with: pendingId) {
-                                transaction.delete(pending)
-                            }
-                            let prPair: (PR, EphemeralPR?)? = {
-                                switch(prState) {
-                                case .found(let epr):
-                                    print("SAVE PR: \(epr.apiUrl)")
-                                    return Updater.savePR(context: transaction, user: user, ephemeralPR: epr)
-                                case .notFound:
-                                    print("PR \(pending.url) NOT FOUND, MARKING DORMANT")
-                                    return Updater.markDormant(context: transaction, user: user, apiUrl: pending.url)
-                                case .otherError:
-                                    print("ERROR WHILE FETCHING PR \(pending.url) ")
-                                    return nil
-                                }
-                            }()
-                            prPair.map{try? transaction.obtainPermanentIDs(for: [$0.0])}
-                            Scheduler.finalizeTransaction(transaction: transaction) {
-                                prPair.map{prSavedHandler($0.0.objectID, $0.1)}
-                            }
-                        }
-                    }
-                }
-            }
+            let pendingId = notif.userInfo?["pendingId"] as? NSManagedObjectID
+            Scheduler.updatePRWorking(context: transaction, userId: userId, pending: pending, pendingId: pendingId, prSavedHandler: prSavedHandler)
         }
         Timer.scheduledTimer(withTimeInterval: 5, repeats: true) {_ in
+            self.performStep()
+        }
+    }
+    
+    func performStep() {
+        self.queue.addOperation {
             let transaction = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             transaction.parent = self.context
-            if (self.updateUsers) {
-                if (self.users.isEmpty) {
-                    self.fetchUsers(context: transaction)
+            if self.updateUsers {
+                if self.users.isEmpty {
+                    transaction.performAndWait {
+                        self.fetchUsers(context: transaction)
+                    }
                 }
                 if let userId = self.users.popLast() {
                     Scheduler.updateUser(context: transaction, userId: userId)
                 }
             } else {
-                if (self.pendings.isEmpty) {
-                    self.fetchPendings(context: transaction)
+                if self.pendings.isEmpty {
+                    transaction.performAndWait {
+                        self.fetchPendings(context: transaction)
+                    }
                 }
                 if let queued = self.pendings.popLast() {
                     Scheduler.updatePR(context: transaction, userId: queued.userId, pending: queued.pending, pendingId: queued.pendingId)
@@ -164,7 +183,7 @@ class Scheduler {
             print("CoreData error: \(error), \(error.userInfo)")
         }
     }
-    
+
     func fetchPendings(context: NSManagedObjectContext) {
         let request: NSFetchRequest<PendingPR> = PendingPR.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
