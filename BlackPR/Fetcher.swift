@@ -10,10 +10,10 @@ import Foundation
 
 class Fetcher {
 
-    let urlSession = URLSession(configuration: .ephemeral)
-    let nextSuffix = "; rel=\"next\""
+    static let urlSession = URLSession(configuration: .ephemeral)
+    static let nextSuffix = "; rel=\"next\""
     
-    func resolvePending(reviewer: EphemeralUser, pending: EphemeralPending, completionHandler: @escaping (_ prState: PRState) -> Void) {
+    static func resolvePending(reviewer: EphemeralUser, pending: EphemeralPending, completionHandler: @escaping (_ prState: PRState) -> Void) {
         print("Resolving PR: \(pending.url)")
         if let url = URL(string: pending.url) {
             var request = URLRequest(url: url)
@@ -97,14 +97,14 @@ class Fetcher {
         }
     }
     
-    func fetchNotifications(user: EphemeralUser, completionHandler: @escaping (_ pendings: [EphemeralPending]) -> Void) {
+    static func fetchNotifications(user: EphemeralUser, completionHandler: @escaping (_ pendings: [EphemeralPending]) -> Void) {
         print("Resolving user: \(user.name)")
         let since = user.lastUpdated.map{"&since=\(ISO8601DateFormatter().string(from: $0 - 1))"} ?? ""
         let url = URL(string: "https://api.github.com/notifications?all=true\(since)")!
         fetchNotificationWorker(url: url, token: user.token, acc: [], completionHandler: completionHandler)
     }
     
-    func fetchNotificationWorker(url: URL, token: String, acc: [EphemeralPending],
+    static func fetchNotificationWorker(url: URL, token: String, acc: [EphemeralPending],
                                  completionHandler: @escaping (_ pendings: [EphemeralPending]) -> Void
     ) {
         var request = URLRequest(url: url)

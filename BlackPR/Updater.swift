@@ -10,7 +10,7 @@ import CoreData
 
 class Updater {
     
-    func savePendings(context: NSManagedObjectContext, user: User, pendings: [EphemeralPending]) -> [(PendingPR, EphemeralPending)] {
+    static func savePendings(context: NSManagedObjectContext, user: User, pendings: [EphemeralPending]) -> [(PendingPR, EphemeralPending)] {
         let prRequest: NSFetchRequest<PR> = PR.fetchRequest()
         prRequest.predicate = NSPredicate(format: "apiUrl IN %@ AND requested == %@", pendings.map{$0.url}, user)
         do {
@@ -39,7 +39,7 @@ class Updater {
         }
     }
 
-    func savePR(context: NSManagedObjectContext, user: User, ephemeralPR: EphemeralPR) -> (PR, EphemeralPR?)? {
+    static func savePR(context: NSManagedObjectContext, user: User, ephemeralPR: EphemeralPR) -> (PR, EphemeralPR?)? {
         do {
             let prPair: (PR, EphemeralPR?) = try {
                 let existingRequest: NSFetchRequest<PR> = PR.fetchRequest()
@@ -102,7 +102,7 @@ class Updater {
         }
     }
     
-    func markDormant(context: NSManagedObjectContext, user: User, apiUrl: String) -> (PR, EphemeralPR)? {
+    static func markDormant(context: NSManagedObjectContext, user: User, apiUrl: String) -> (PR, EphemeralPR)? {
         let existingRequest: NSFetchRequest<PR> = PR.fetchRequest()
         existingRequest.predicate = NSPredicate(format: "apiUrl == %@ AND requested == %@", apiUrl, user)
         guard let existingPRs = try? context.fetch(existingRequest) else { return nil }
