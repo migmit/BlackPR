@@ -1,5 +1,9 @@
 # BlackPR
 
+## News
+
+Code now signed, no "unidentified developer" anymore.
+
 ## Downloads
 
 Current release: https://github.com/migmit/BlackPR/releases/latest/download/BlackPR.dmg
