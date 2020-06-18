@@ -1,5 +1,7 @@
 # BlackPR
 
+This program does one thing and one thing only: keeps track of the pull requests that are awaiting your review. It shows you the whole list of PRs assigned to you, keeps a notification badge in the Dock (so that you see it frequently), and displays notifications when there is a new review request.
+
 ## News
 
 Code now signed, no "unidentified developer" anymore.
